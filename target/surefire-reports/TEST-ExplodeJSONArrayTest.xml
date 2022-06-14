@@ -31,7 +31,7 @@
     <property name="maven.ext.class.path" value="F:\IntelliJ IDEA 2020.1\plugins\maven\lib\maven-event-listener.jar"/>
     <property name="classworlds.conf" value="F:\maven-3.6.1\bin\m2.conf"/>
     <property name="sun.jnu.encoding" value="GBK"/>
-    <property name="java.library.path" value="F:\IDE\jdk1.8.0_201\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;F:\Git\cmd;G:\SVN\bin;C:\Program Files\MIT\Kerberos\bin;F:\IDE\jdk1.8.0_201\bin;F:\maven-3.6.1\bin;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Users\CJ\AppData\Local\Microsoft\WindowsApps;F:\IntelliJ IDEA 2020.1\bin;;G:\Bandizip\;."/>
+    <property name="java.library.path" value="F:\IDE\jdk1.8.0_201\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;G:\AdoptOpenJDK\jre-11.0.7.10-hotspot\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;F:\Git\cmd;G:\SVN\bin;C:\Program Files\MIT\Kerberos\bin;F:\IDE\jdk1.8.0_201\bin;F:\maven-3.6.1\bin;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;F:\IDE\scala-2.11.12\bin;C:\Users\CJ\AppData\Local\Microsoft\WindowsApps;F:\IntelliJ IDEA 2020.1\bin;;G:\Bandizip\;."/>
     <property name="maven.conf" value="F:\maven-3.6.1/conf"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.class.version" value="52.0"/>
