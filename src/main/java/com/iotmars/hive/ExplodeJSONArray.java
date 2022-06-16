@@ -74,8 +74,4 @@ public class ExplodeJSONArray extends GenericUDTF {
     public void close() throws HiveException {
 
     }
-
-
-
-
 }

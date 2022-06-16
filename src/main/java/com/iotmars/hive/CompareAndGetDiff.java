@@ -33,14 +33,14 @@ public class CompareAndGetDiff extends GenericUDTF {
         }
 
         // 2. 参数必须都为string
-        if (argOIs[0].getCategory() != ObjectInspector.Category.PRIMITIVE) {
+        if (argOIs[0].getCategory() != ObjectInspector.Category.PRIMITIVE || argOIs[1].getCategory() != ObjectInspector.Category.PRIMITIVE) {
             throw new UDFArgumentException("只接受基础类型参数");
         }
 
         PrimitiveObjectInspector argument0 = (PrimitiveObjectInspector) argOIs[0];
         PrimitiveObjectInspector argument1 = (PrimitiveObjectInspector) argOIs[1];
 
-        if (argument0.getPrimitiveCategory() != PrimitiveObjectInspector.PrimitiveCategory.STRING) {
+        if (argument0.getPrimitiveCategory() != PrimitiveObjectInspector.PrimitiveCategory.STRING || argument1.getPrimitiveCategory() != PrimitiveObjectInspector.PrimitiveCategory.STRING) {
             throw new UDFArgumentException("只接受string类型");
         }
 
@@ -83,7 +83,7 @@ public class CompareAndGetDiff extends GenericUDTF {
 
                 Logger.getLogger("CompareAndGetDiff").warning("值: " + newValue + "  " + oldValue);
                 if (!Objects.isNull(newValue) && !newValue.equalsIgnoreCase(oldValue)) {
-                    String[] result = {key,newValue,oldValue};
+                    String[] result = {key, newValue, oldValue};
                     forward(result);
                 }
             }
