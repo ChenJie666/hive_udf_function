@@ -48,7 +48,7 @@ public class ParseErrorCodeAndGetDiff extends GenericUDTF {
             // 返回新增的异常值
             for (String newFaultCode : newFaultCodeList) {
                 if (!oldFaultCodeList.contains(newFaultCode)) {
-                    forward(newFaultCode);
+                    forward(new String[]{newFaultCode});
                 }
             }
 
