@@ -67,8 +67,9 @@ public class ParseErrorCodeAndGetDiff extends GenericUDTF {
             // 通过比较
             value = Double.valueOf(Math.pow(2D, exp)).longValue();
             long calc = code & value;
+            // 1为E1,2为E2,4为E3,8196为E12
             if (calc > 0L) {
-                list.add(String.valueOf(exp));
+                list.add(String.valueOf(exp - 1));
             }
             ++exp;
         }
