@@ -94,7 +94,7 @@ public class CompareAndGetDiff extends GenericUDTF {
                                 + (oldData.has("CookbookName") ? "," + "CookbookName:" + oldData.getJSONObject("CookbookName").getString("value") : "")
                                 + (oldData.has("StOvMode") ? "," + "StOvMode:" + oldData.getJSONObject("StOvMode").getString("value") : "")
                                 + (oldData.has("LStOvMode") ? "," + "LStOvMode:" + oldData.getJSONObject("LStOvMode").getString("value") : "")
-                                + (oldData.has("RStOvState") ? "," + "RStOvState:" + oldData.getJSONObject("RStOvState").getString("value") : "");
+                                + (oldData.has("LStOvMode") ? "," + "LStOvMode:" + oldData.getJSONObject("LStOvMode").getString("value") : "");
                         String[] result = {key, newV, oldV};
                         forward(result);
                     } else {
