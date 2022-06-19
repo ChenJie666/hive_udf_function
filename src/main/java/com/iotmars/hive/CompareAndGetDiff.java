@@ -84,14 +84,24 @@ public class CompareAndGetDiff extends GenericUDTF {
 //                Logger.getLogger("CompareAndGetDiff").warning("值: " + newValue + "  " + oldValue);
                 if (!Objects.isNull(newValue) && !newValue.equalsIgnoreCase(oldValue)) {
                     // 菜谱和工作模式有联动，后续有需求要多条件判断
-                    if ("CookbookID".equals(key) || "CookbookName".equals(key) || "StOvMode".equals(key) || "LStOvMode".equals(key) || "RStOvState".equals(key)) {
+//                    if ("CookbookID".equals(key) || "CookbookName".equals(key) || "StOvMode".equals(key) || "LStOvMode".equals(key) || "RStOvState".equals(key)) {
+//                        String newV = (newData.has("CookbookID") ? "," + "CookbookID:" + newData.getJSONObject("CookbookID").getString("value") : "")
+//                                + (newData.has("CookbookName") ? "," + "CookbookName:" + newData.getJSONObject("CookbookName").getString("value") : "")
+//                                + (newData.has("StOvMode") ? "," + "StOvMode:" + newData.getJSONObject("StOvMode").getString("value") : "")
+//                                + (newData.has("LStOvMode") ? "," + "LStOvMode:" + newData.getJSONObject("LStOvMode").getString("value") : "")
+//                                + (newData.has("RStOvState") ? "," + "RStOvState:" + newData.getJSONObject("RStOvState").getString("value") : "");
+//                        String oldV = (oldData.has("CookbookID") ? "," + "CookbookID:" + oldData.getJSONObject("CookbookID").getString("value") : "")
+//                                + (oldData.has("CookbookName") ? "," + "CookbookName:" + oldData.getJSONObject("CookbookName").getString("value") : "")
+//                                + (oldData.has("StOvMode") ? "," + "StOvMode:" + oldData.getJSONObject("StOvMode").getString("value") : "")
+//                                + (oldData.has("LStOvMode") ? "," + "LStOvMode:" + oldData.getJSONObject("LStOvMode").getString("value") : "")
+                    if ("CookbookID".equals(key) || "MultiStageName".equals(key) || "StOvMode".equals(key) || "LStOvMode".equals(key) || "RStOvState".equals(key)) {
                         String newV = (newData.has("CookbookID") ? "," + "CookbookID:" + newData.getJSONObject("CookbookID").getString("value") : "")
-                                + (newData.has("CookbookName") ? "," + "CookbookName:" + newData.getJSONObject("CookbookName").getString("value") : "")
+                                + (newData.has("MultiStageName") ? "," + "MultiStageName:" + newData.getJSONObject("MultiStageName").getString("value") : "")
                                 + (newData.has("StOvMode") ? "," + "StOvMode:" + newData.getJSONObject("StOvMode").getString("value") : "")
                                 + (newData.has("LStOvMode") ? "," + "LStOvMode:" + newData.getJSONObject("LStOvMode").getString("value") : "")
                                 + (newData.has("RStOvState") ? "," + "RStOvState:" + newData.getJSONObject("RStOvState").getString("value") : "");
                         String oldV = (oldData.has("CookbookID") ? "," + "CookbookID:" + oldData.getJSONObject("CookbookID").getString("value") : "")
-                                + (oldData.has("CookbookName") ? "," + "CookbookName:" + oldData.getJSONObject("CookbookName").getString("value") : "")
+                                + (oldData.has("MultiStageName") ? "," + "MultiStageName:" + oldData.getJSONObject("MultiStageName").getString("value") : "")
                                 + (oldData.has("StOvMode") ? "," + "StOvMode:" + oldData.getJSONObject("StOvMode").getString("value") : "")
                                 + (oldData.has("LStOvMode") ? "," + "LStOvMode:" + oldData.getJSONObject("LStOvMode").getString("value") : "")
                                 + (oldData.has("LStOvMode") ? "," + "LStOvMode:" + oldData.getJSONObject("LStOvMode").getString("value") : "");
