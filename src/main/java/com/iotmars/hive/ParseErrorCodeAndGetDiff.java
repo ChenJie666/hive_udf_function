@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 /**
+ * 将飞燕日志中的items中每个属性单独炸成一行，同时为了联动属性的需求，每行还需要带原始的items
  * @author CJ
  * @date: 2022/6/16 10:38
  */
