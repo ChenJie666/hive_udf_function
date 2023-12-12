@@ -1,5 +1,7 @@
 package com.iotmars.hive;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.hadoop.hive.ql.exec.UDFArgumentException;
 import org.apache.hadoop.hive.ql.metadata.HiveException;
 import org.apache.hadoop.hive.ql.udf.generic.GenericUDTF;
@@ -9,7 +11,6 @@ import org.apache.hadoop.hive.serde2.objectinspector.PrimitiveObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.StructObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorUtils;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -71,7 +72,8 @@ public class ExplodeItemsAndKeepItems extends GenericUDTF {
 
         // 解析json
         try {
-            JSONObject jsonObject = new JSONObject(jsonStr);
+//            JSONObject jsonObject = new JSONObject(jsonStr);
+            JSONObject jsonObject = JSON.parseObject(jsonStr);
             Set<String> keySet = jsonObject.keySet();
 
             for (String key : keySet) {
@@ -84,30 +86,29 @@ public class ExplodeItemsAndKeepItems extends GenericUDTF {
                         // 寻找联动属性 StOvState、StStatus/OvStatus、StreamStatus、LStOvState、RStOvState
                         // 联动属性 StOvMode、StMode/OvMode、SteamerMode、LStOvMode、RStOvMode
                         JSONObject relaFieldJson = null;
-                        String relaFieldValue = "";
-                        try {
-                            if ("LStOvState".equals(key)) {
-                                relaFieldJson = jsonObject.getJSONObject("LStOvMode");
-                            } else if ("RStOvState".equals(key)) {
-                                relaFieldJson = jsonObject.getJSONObject("RStOvMode");
-                            } else if ("StOvState".equals(key)) {
-                                relaFieldJson = jsonObject.getJSONObject("StOvMode");
-                            } else if ("StStatus".equals(key)) {
-                                relaFieldJson = jsonObject.getJSONObject("StMode");
-                            } else if ("OvStatus".equals(key)) {
-                                relaFieldJson = jsonObject.getJSONObject("OvMode");
-                            } else if ("StreamStatus".equals(key)) {
-                                relaFieldJson = jsonObject.getJSONObject("SteamerMode");
-                            }
-                            if (relaFieldJson != null) {
-                                relaFieldValue = relaFieldJson.getString("value");
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        String relaFieldValue = null;
+                        if ("LStOvState".equals(key)) {
+                            relaFieldJson = jsonObject.getJSONObject("LStOvMode");
+                        } else if ("RStOvState".equals(key)) {
+                            relaFieldJson = jsonObject.getJSONObject("RStOvMode");
+                        } else if ("StOvState".equals(key)) {
+                            relaFieldJson = jsonObject.getJSONObject("StOvMode");
+                        } else if ("StStatus".equals(key)) {
+                            relaFieldJson = jsonObject.getJSONObject("StMode");
+                        } else if ("OvStatus".equals(key)) {
+                            relaFieldJson = jsonObject.getJSONObject("OvMode");
+                        } else if ("StreamStatus".equals(key)) {
+                            relaFieldJson = jsonObject.getJSONObject("SteamerMode");
+                        }
+                        if (relaFieldJson != null) {
+                            relaFieldValue = relaFieldJson.getString("value");
                         }
 
-                        String[] result = {time, key, value, relaFieldValue};
-                        forward(result);
+                        // 如果数据存在，则写出
+                        if (value != null) {
+                            String[] result = {time, key, value, relaFieldValue};
+                            forward(result);
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
