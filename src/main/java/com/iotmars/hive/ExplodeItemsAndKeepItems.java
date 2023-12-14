@@ -30,7 +30,9 @@ public class ExplodeItemsAndKeepItems extends GenericUDTF {
 
     @Override
     public StructObjectInspector initialize(ObjectInspector[] argOIs) throws UDFArgumentException {
-        extraFields = Arrays.asList("LStoveStatus", "RStoveStatus", "StOvState", "StStatus", "OvStatus", "StreamStatus", "LStOvState", "RStOvState", "HoodSpeed");
+        extraFields = Arrays.asList("LStoveStatus", "RStoveStatus", "StOvState", "StStatus", "OvStatus", "StreamStatus", "LStOvState", "RStOvState", "HoodSpeed"
+        ,"HoodStoveLink","HoodLightLink","OilTempSwitch","HoodOffTimer","LMovePotLowHeatSwitch","RMovePotLowHeatSwitch","CookingCurveSwitch"
+        ,"LStoveTimingState","RStoveTimingState","LAuxiliarySwitch","RAuxiliarySwitch");
 
         // 1.检查参数合法性
         if (argOIs.length != 1) {
