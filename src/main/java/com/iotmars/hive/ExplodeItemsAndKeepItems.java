@@ -18,8 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * 炸开items并保留items字段；因为运行太耗时，
- * 这里取需要的字段LStoveStatus、RStoveStatus、StOvState、StStatus/OvStatus、StreamStatus、LStOvState、RStOvState、HoodSpeed
+ * 炸开items并保留items字段；因为运行太耗时,这里取需要的字段LStoveStatus、RStoveStatus、StOvState、StStatus/OvStatus、StreamStatus、LStOvState、RStOvState、HoodSpeed
  * 联动字段StOvMode、StMode/OvMode、SteamerMode、LStOvMode、RStOvMode
  *
  * @author CJ
@@ -78,42 +77,54 @@ public class ExplodeItemsAndKeepItems extends GenericUDTF {
             JSONObject jsonObject = JSON.parseObject(jsonStr);
             Set<String> keySet = jsonObject.keySet();
 
-            for (String key : keySet) {
-                try {
-                    if (extraFields.contains(key)) {
-                        JSONObject valueJson = jsonObject.getJSONObject(key);
-                        String value = valueJson.getString("value");
-                        String time = valueJson.getString("time");
+            if (!keySet.contains("action")) {
+                for (String key : keySet) {
+                    try {
+                        if (extraFields.contains(key)) {
+                            JSONObject valueJson = jsonObject.getJSONObject(key);
+                            String value = valueJson.getString("value");
+                            String time = valueJson.getString("time");
 
-                        // 寻找联动属性 StOvState、StStatus/OvStatus、StreamStatus、LStOvState、RStOvState
-                        // 联动属性 StOvMode、StMode/OvMode、SteamerMode、LStOvMode、RStOvMode
-                        JSONObject relaFieldJson = null;
-                        String relaFieldValue = null;
-                        if ("LStOvState".equals(key)) {
-                            relaFieldJson = jsonObject.getJSONObject("LStOvMode");
-                        } else if ("RStOvState".equals(key)) {
-                            relaFieldJson = jsonObject.getJSONObject("RStOvMode");
-                        } else if ("StOvState".equals(key)) {
-                            relaFieldJson = jsonObject.getJSONObject("StOvMode");
-                        } else if ("StStatus".equals(key)) {
-                            relaFieldJson = jsonObject.getJSONObject("StMode");
-                        } else if ("OvStatus".equals(key)) {
-                            relaFieldJson = jsonObject.getJSONObject("OvMode");
-                        } else if ("StreamStatus".equals(key)) {
-                            relaFieldJson = jsonObject.getJSONObject("SteamerMode");
-                        }
-                        if (relaFieldJson != null) {
-                            relaFieldValue = relaFieldJson.getString("value");
-                        }
+                            // 寻找联动属性 StOvState、StStatus/OvStatus、StreamStatus、LStOvState、RStOvState
+                            // 联动属性 StOvMode、StMode/OvMode、SteamerMode、LStOvMode、RStOvMode
+                            JSONObject relaFieldJson = null;
+                            String relaFieldValue = null;
+                            if ("LStOvState".equals(key)) {
+                                relaFieldJson = jsonObject.getJSONObject("LStOvMode");
+                            } else if ("RStOvState".equals(key)) {
+                                relaFieldJson = jsonObject.getJSONObject("RStOvMode");
+                            } else if ("StOvState".equals(key)) {
+                                relaFieldJson = jsonObject.getJSONObject("StOvMode");
+                            } else if ("StStatus".equals(key)) {
+                                relaFieldJson = jsonObject.getJSONObject("StMode");
+                            } else if ("OvStatus".equals(key)) {
+                                relaFieldJson = jsonObject.getJSONObject("OvMode");
+                            } else if ("StreamStatus".equals(key)) {
+                                relaFieldJson = jsonObject.getJSONObject("SteamerMode");
+                            }
+                            if (relaFieldJson != null) {
+                                relaFieldValue = relaFieldJson.getString("value");
+                            }
 
-                        // 如果数据存在，则写出
-                        if (value != null) {
-                            String[] result = {time, key, value, relaFieldValue};
-                            forward(result);
+                            // 如果数据存在，则写出
+                            if (value != null) {
+                                String[] result = {time, key, value, relaFieldValue};
+                                forward(result);
+                            }
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                }
+            } else {
+                // 如果是上下线信息，则插入value为0的记录
+                JSONObject valueJson = jsonObject.getJSONObject("status");
+                if (valueJson != null) {
+                    String time = valueJson.getString("time");
+                    for (String extraField : extraFields) {
+                        String[] result = {time, extraField, "0", null};
+                        forward(result);
+                    }
                 }
             }
         } catch (Exception e) {
