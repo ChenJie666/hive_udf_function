@@ -26,12 +26,15 @@ import java.util.Set;
  */
 public class ExplodeItemsAndKeepItems extends GenericUDTF {
     private List<String> extraFields;
+    // 智能功能相关字段，如烟机延时，
+    private List<String> extraSmartFunctionFields;
 
     @Override
     public StructObjectInspector initialize(ObjectInspector[] argOIs) throws UDFArgumentException {
         extraFields = Arrays.asList("LStoveStatus", "RStoveStatus", "StOvState", "StStatus", "OvStatus", "StreamStatus", "LStOvState", "RStOvState", "HoodSpeed"
                 , "SmartSmokeValid", "HoodStoveLink", "HoodLightLink", "OilTempSwitch", "HoodOffTimer", "LMovePotLowHeatSwitch", "RMovePotLowHeatSwitch"
                 , "CookingCurveSwitch", "LStoveTimingState", "RStoveTimingState", "LAuxiliarySwitch", "RAuxiliarySwitch");
+        extraSmartFunctionFields = Arrays.asList("HoodStoveLink", "HoodOffTimer", "OilTempSwitch", "LMovePotLowHeatSwitch", "RMovePotLowHeatSwitch", "HoodLightLink", "CookingCurveSwitch");
 
         // 1.检查参数合法性
         if (argOIs.length != 1) {
@@ -122,8 +125,11 @@ public class ExplodeItemsAndKeepItems extends GenericUDTF {
                 if (valueJson != null) {
                     String time = valueJson.getString("time");
                     for (String extraField : extraFields) {
-                        String[] result = {time, extraField, "0", null};
-                        forward(result);
+                        // 智能功能的event_name需要排除掉，因为取最新的记录来判断该设备是否开启的该功能
+                        if (!extraSmartFunctionFields.contains(extraField)) {
+                            String[] result = {time, extraField, "0", null};
+                            forward(result);
+                        }
                     }
                 }
             }
