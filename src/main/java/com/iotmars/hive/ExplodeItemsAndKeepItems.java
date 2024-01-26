@@ -25,16 +25,14 @@ import java.util.Set;
  * @date: 2023/12/11 11:14
  */
 public class ExplodeItemsAndKeepItems extends GenericUDTF {
-    private List<String> extraFields;
+    private final List<String> extraFields = Arrays.asList("ErrorCode","LStoveStatus", "RStoveStatus", "StOvState", "StStatus", "OvStatus", "StreamStatus", "LStOvState", "RStOvState", "HoodSpeed"
+            , "SmartSmokeValid", "HoodStoveLink", "HoodLightLink", "OilTempSwitch", "HoodOffTimer", "LMovePotLowHeatSwitch", "RMovePotLowHeatSwitch"
+            , "CookingCurveSwitch", "LStoveTimingState", "RStoveTimingState", "LAuxiliarySwitch", "RAuxiliarySwitch");
     // 智能功能相关字段，如烟机延时，
-    private List<String> extraSmartFunctionFields;
+    private final List<String> extraSmartFunctionFields = Arrays.asList("HoodStoveLink", "HoodOffTimer", "OilTempSwitch", "LMovePotLowHeatSwitch", "RMovePotLowHeatSwitch", "HoodLightLink", "CookingCurveSwitch");
 
     @Override
     public StructObjectInspector initialize(ObjectInspector[] argOIs) throws UDFArgumentException {
-        extraFields = Arrays.asList("LStoveStatus", "RStoveStatus", "StOvState", "StStatus", "OvStatus", "StreamStatus", "LStOvState", "RStOvState", "HoodSpeed"
-                , "SmartSmokeValid", "HoodStoveLink", "HoodLightLink", "OilTempSwitch", "HoodOffTimer", "LMovePotLowHeatSwitch", "RMovePotLowHeatSwitch"
-                , "CookingCurveSwitch", "LStoveTimingState", "RStoveTimingState", "LAuxiliarySwitch", "RAuxiliarySwitch");
-        extraSmartFunctionFields = Arrays.asList("HoodStoveLink", "HoodOffTimer", "OilTempSwitch", "LMovePotLowHeatSwitch", "RMovePotLowHeatSwitch", "HoodLightLink", "CookingCurveSwitch");
 
         // 1.检查参数合法性
         if (argOIs.length != 1) {
